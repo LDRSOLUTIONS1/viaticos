@@ -1,5 +1,5 @@
 <?php
-namespace App\Models;
+namespace App\Models\Solicitudes;
 use Illuminate\Database\Eloquent\Model;
 class Solicitudes extends Model
 {
