@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SolicitudController;
+use App\Http\Controllers\Base\ConceptosController;
+use App\Http\Controllers\Base\MotivosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/solicitudes', function () {
-    return view('solicitudes.index');
-});
+Route::get('/solicitudes/{token}/{id_user}', [SolicitudController::class, 'index']);
 Route::get('/solicitud-detalles', function () {
     return view('solicitudes.detalles');
 });
@@ -28,3 +29,7 @@ Route::get('/depositos', function () {
 Route::get('/gastos', function () {
     return view('solicitudes.gastos');
 });
+Route::post('/nueva-solicitud', [SolicitudController::class, 'nuevo']);
+Route::get('/select-conceptos', [ConceptosController::class, 'select']);
+Route::get('/select-motivos', [MotivosController::class, 'select']);
+Route::get('/solicitud-detalles/{id_solicitud}', [SolicitudController::class, 'detalles']);

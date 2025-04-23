@@ -14,9 +14,9 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col"><b>Monto Solicitado</b></div>
-                        <div class="col">$2,500.00</div>
+                        <div class="col">$ {{number_format($solicitud->solicitud_costo_estimado, 2)}}</div>
                         <div class="col"><b>Gasto Cotizado</b></div>
-                        <div class="col">$2,500.00</div>
+                        <div class="col">$ {{number_format($gasto_cotizado, 2)}}</div>
                     </div>
                     <div class="row">
                         <div class="col"><b>Monto Depositado</b></div>
@@ -26,24 +26,22 @@
                     </div>
                     <div class="row">
                         <div class="col"><b>Folio</b></div>
-                        <div class="col">1</div>
+                        <div class="col">{{$solicitud->id_solicitud}}</div>
                         <div class="col"><b>Solicitante</b></div>
-                        <div class="col">Uriel Sosa</div>
+                        <div class="col">{{$solicitud->nombre_solicitante}}</div>
                         <div class="col"><b>Área</b></div>
-                        <div class="col">TI Sistemas</div>
+                        <div class="col">{{$solicitud->nombre_area}}</div>
                         <div class="col"><b>Concepto</b></div>
-                        <div class="col">Viáticos</div>
+                        <div class="col">{{$solicitud->concepto_nombre}}</div>
                     </div>
                     <div class="row">
 
                         <div class="col"><b>Motivo</b></div>
-                        <div class="col-10">Cita de negociación con cliente</div>
+                        <div class="col-10">{{$solicitud->motivo_nombre}}</div>
                     </div>
                     <div class="row">
                         <div class="col"><b>Descripción</b></div>
-                        <div class="col-10"> SE TIENE VISITA PROGRAMADA DE SUPERVISIÓN A LA INSTALACIÓN DE CYTSON EN LOS
-                            MOCHIS SINALOA PARA REMODELACIÓN E INICIO DE OPERACIONES EN MARZO 2025.
-                        </div>
+                        <div class="col-10">{{$solicitud->solicitud_descripcion}}</div>
                     </div>
                 </div>
             </div>
