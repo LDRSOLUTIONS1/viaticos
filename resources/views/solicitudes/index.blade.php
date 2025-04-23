@@ -61,14 +61,12 @@
                             <label for="id_motivo">Motivo</label>
                             <select name="id_motivo" id="contenedor_select_motivos" class="form-select">
                                 <option value="">Seleccionar</option>
-                                <!-- Las opciones se cargarán aquí dinámicamente -->
                             </select>
                         </div>
                         <div class="col">
                             <label for="id_concepto">Concepto</label>
                             <select name="id_concepto" id="contenedor_select_conceptos" class="form-select">
                                 <option value="">Seleccionar</option>
-                                <!-- Las opciones se cargarán aquí dinámicamente -->
                             </select>
                         </div>
                         <div class="col">
@@ -171,11 +169,6 @@
                     selectPrincipal.appendChild(opcion.cloneNode(true));
                 });
 
-                // Si usas Select2, actualízalo
-                if (typeof $.fn.select2 !== 'undefined' && $('#contenedor_select_conceptos').hasClass('select2-hidden-accessible')) {
-                    $('#contenedor_select_conceptos').trigger('change');
-                }
-
             } catch (error) {
                 console.error('Error al cargar las opciones:', error);
                 // Opcional: Mostrar mensaje de error al usuario
@@ -185,8 +178,6 @@
         // Cargar las opciones al inicio
         cargarOpciones();
 
-        // Opcional: Recargar cuando otro select cambie (ejemplo)
-        document.getElementById('otro_select')?.addEventListener('change', cargarOpciones);
         const selectMotivos = document.getElementById('contenedor_select_motivos');
 
         // Función para cargar las opciones
@@ -212,11 +203,6 @@
                     selectMotivos.appendChild(opcion.cloneNode(true));
                 });
 
-                // Si usas Select2, actualízalo
-                if (typeof $.fn.select2 !== 'undefined' && $('#contenedor_select_conceptos').hasClass('select2-hidden-accessible')) {
-                    $('#contenedor_select_conceptos').trigger('change');
-                }
-
             } catch (error) {
                 console.error('Error al cargar las opciones:', error);
                 // Opcional: Mostrar mensaje de error al usuario
@@ -226,7 +212,5 @@
         // Cargar las opciones al inicio
         cargarOpcionesMotivos();
 
-        // Opcional: Recargar cuando otro select cambie (ejemplo)
-        document.getElementById('otro_select')?.addEventListener('change', cargarOpciones);
     });
 </script>

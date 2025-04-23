@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\Base\ConceptosController;
 use App\Http\Controllers\Base\MotivosController;
+use App\Http\Controllers\Base\CotizacionTiposController;
+use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\Base\AerolineasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +36,7 @@ Route::post('/nueva-solicitud', [SolicitudController::class, 'nuevo']);
 Route::get('/select-conceptos', [ConceptosController::class, 'select']);
 Route::get('/select-motivos', [MotivosController::class, 'select']);
 Route::get('/solicitud-detalles/{id_solicitud}', [SolicitudController::class, 'detalles']);
+Route::get('/select-cotizacion-tipos', [CotizacionTiposController::class, 'select']);
+Route::get('/cotizaciones/{id_solicitud}', [CotizacionController::class, 'index']);
+Route::get('/select-aerolineas', [AerolineasController::class, 'select']);
+Route::post('/nueva-cotizacion', [CotizacionController::class, 'nuevo']);
