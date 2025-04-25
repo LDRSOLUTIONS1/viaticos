@@ -144,6 +144,59 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="exampleModal_gasto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/nuevo-comprobante" method="post" enctype="multipart/form-data"
+                onsubmit="enviarComprobante(event)">
+                @csrf
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Comprobar Gasto</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            <input type="hidden" name="id_cotizacion" id="inputIdCotizacion" value="">
+                            <label for="comprobante_gasto_monto">Monto</label>
+                            <input type="text" name="comprobante_gasto_monto" id="comprobante_gasto_monto"
+                                class="form-control">
+                        </div>
+                        <div class="col">
+                            <label for="comprobante_gasto_monto_deducible">Deducible</label>
+                            <input type="text" name="comprobante_gasto_monto_deducible"
+                                id="comprobante_gasto_monto_deducible" class="form-control">
+                        </div>
+                        <div class="col">
+                            <input class="form-check-input" type="checkbox" name="comprobante_gasto_factura"
+                                id="comprobante_gasto_factura" checked>
+                            <label class="form-check-label" for="comprobante_gasto_factura">
+                                Es Factura
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="comprobante_gasto_observaciones">Observaciones</label>
+                            <textarea name="comprobante_gasto_observaciones" id="comprobante_gasto_observaciones"
+                                class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="archivo">Subir archivo</label>
+                        <div class="col">
+                            <input type="file" name="archivo" id="archivo" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script>
     async function enviarCotizacion(event) {
         event.preventDefault();
@@ -196,7 +249,7 @@
         }
     }
     document.addEventListener('DOMContentLoaded', function () {
-        id_solicitud = document.getElementById('id_solicitud');
+        id_solicitud = document.getElementById('id_solicitud').value;
         const contenedor = document.getElementById('cotizaciones');
 
         fetch('/cotizaciones/' + id_solicitud)  // Ruta Laravel que devuelve la tabla
@@ -278,6 +331,7 @@
 
         // Cargar las opciones al inicio
         cargarOpcionesAerolineas();
+
     });
     document.getElementById('contenedor_select_cotizacion_tipos').addEventListener('change', function () {
         const inputsDiv = document.getElementById('inputsOcultos');
@@ -285,6 +339,66 @@
             inputsDiv.style.display = 'block'; // Muestra los inputs
         } else {
             inputsDiv.style.display = 'none';  // Oculta los inputs
+        }
+    });
+    async function enviarComprobante(event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+
+        // Mostrar loader
+        Swal.fire({
+            title: 'Procesando',
+            html: 'Por favor espere...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        try {
+            const response = await fetch("/nuevo-comprobante", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Accept': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            Swal.fire({
+                icon: data.success ? 'success' : 'error',
+                title: data.success ? '¡Éxito!' : 'Error',
+                text: data.message,
+                timer: data.success ? 3000 : null,
+                showConfirmButton: !data.success
+            });
+
+            if (data.success) {
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+            }
+
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de conexión',
+                text: 'No se pudo conectar con el servidor'
+            });
+        }
+    }
+
+</script>
+<script>
+    document.addEventListener('click', function (e) {
+        if (e.target.closest('.btn-comprobante')) {
+            e.preventDefault();
+            const idCotizacion = e.target.closest('.btn-comprobante').dataset.id;
+            document.getElementById('inputIdCotizacion').value = idCotizacion;
         }
     });
 </script>

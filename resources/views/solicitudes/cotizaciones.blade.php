@@ -14,35 +14,35 @@
                                 <th>Costo</th>
                                 <th>Autoriza Jefe</th>
                                 <th>Autoriza Viáticos</th>
-                                <th>Gasto Comp.</th>
+                                <th>Gasto Comp</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($vuelos as $vuelo)
-                            
+                                <tr>
+                                    <td>{{$vuelo->cotizacion_fecha_compra}}</td>
+                                    <td>{{$vuelo->aerolinea_nombre}}</td>
+                                    <td>$ {{number_format($vuelo->cotizacion_costo, 2)}}</td>
+                                    <td>{{$vuelo->persona_autoriza}}</td>
+                                    <td>{{$vuelo->id_persona_autoriza}}</td>
+                                    <td>$ 0.00</td>
+                                    <td>
+                                        <a href="{{$vuelo->id_cotizacion}}"
+                                            class="link-secondary tooltip-container m-2 btn-comprobante" type="button"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal_gasto" data-id="{{$vuelo->id_cotizacion}}">
+                                            <span class="tooltip-text">Subir Comprobante</span>
+                                            <i class="fa-solid fa-arrow-up-from-bracket"></i></a>
+                                        <a href="" class="link-primary tooltip-container m-2" type="button"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal_detalle_cotizacion">
+                                            <span class="tooltip-text">Ver Detalles</span>
+                                            <i class="fa-solid fa-magnifying-glass"></i></a>
+                                        <a href="/ver-comprobantes/{{$vuelo->id_cotizacion}}" class="link-secondary tooltip-container m-2" type="button">
+                                            <span class="tooltip-text">Ver Comprobantes</span>
+                                            <i class="fa-solid fa-folder-open"></i></a>
+                                    </td>
+                                </tr>
                             @endforeach
-                            <tr>
-                                <td>11-04-2025</td>
-                                <td>Volaris</td>
-                                <td>$1,900.00</td>
-                                <td>Jorge Isaac</td>
-                                <td>Jenny Astrid</td>
-                                <td>$1,900.00</td>
-                                <td>
-                                    <a href="" class="link-secondary tooltip-container m-2" type="button"
-                                        data-bs-toggle="modal" data-bs-target="#exampleModal_gasto">
-                                        <span class="tooltip-text">Subir Comprobante</span>
-                                        <i class="fa-solid fa-arrow-up-from-bracket"></i></a>
-                                    <a href="" class="link-primary tooltip-container m-2" type="button"
-                                        data-bs-toggle="modal" data-bs-target="#exampleModal_detalle_cotizacion">
-                                        <span class="tooltip-text">Ver Detalles</span>
-                                        <i class="fa-solid fa-magnifying-glass"></i></a>
-                                    <a href="/gastos" class="link-secondary tooltip-container m-2" type="button">
-                                        <span class="tooltip-text">Ver Comprobantes</span>
-                                        <i class="fa-solid fa-folder-open"></i></a>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -62,7 +62,7 @@
                         <thead>
                             <tr>
                                 <th>Tipo</th>
-                                <th>Fecha Compra</th>
+                                <th>Fecha</th>
                                 <th>Costo</th>
                                 <th>Autoriza Jefe</th>
                                 <th>Autoriza Viáticos</th>
@@ -71,27 +71,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Gasolina</td>
-                                <td>11-04-2025</td>
-                                <td>$1,200.00</td>
-                                <td>Jorge Isaac</td>
-                                <td>Jenny Astrid</td>
-                                <td>$500.00</td>
-                                <td>
-                                    <a href="" class="link-secondary tooltip-container m-2" type="button"
-                                        data-bs-toggle="modal" data-bs-target="#exampleModal_gasto">
-                                        <span class="tooltip-text">Subir Comprobante</span>
-                                        <i class="fa-solid fa-arrow-up-from-bracket"></i></a>
-                                    <a href="" class="link-primary tooltip-container m-2" type="button"
-                                        data-bs-toggle="modal" data-bs-target="#exampleModal_detalle_cotizacion">
-                                        <span class="tooltip-text">Ver Detalles</span>
-                                        <i class="fa-solid fa-magnifying-glass"></i></a>
-                                    <a href="/gastos" class="link-secondary tooltip-container m-2" type="button">
-                                        <span class="tooltip-text">Ver Comprobantes</span>
-                                        <i class="fa-solid fa-folder-open"></i></a>
-                                </td>
-                            </tr>
+                            @foreach ($otros as $otro)
+
+
+                                <tr>
+                                    <td>{{$otro->tipo_nombre}}</td>
+                                    <td>{{$otro->cotizacion_fecha_inicio}}</td>
+                                    <td>$ {{number_format($otro->cotizacion_costo, 2)}}</td>
+                                    <td>{{$otro->id_persona_autoriza}}</td>
+                                    <td>{{$otro->id_persona_autoriza}}</td>
+                                    <td>$ 0.00</td>
+                                    <td>
+                                        <a href="{{$otro->id_cotizacion}}"
+                                            class="link-secondary tooltip-container m-2 btn-comprobante" type="button"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal_gasto"
+                                            data-id="{{$otro->id_cotizacion}}">
+                                            <span class="tooltip-text">Subir Comprobante</span>
+                                            <i class="fa-solid fa-arrow-up-from-bracket"></i></a>
+                                        <a href="" class="link-primary tooltip-container m-2" type="button"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal_detalle_cotizacion">
+                                            <span class="tooltip-text">Ver Detalles</span>
+                                            <i class="fa-solid fa-magnifying-glass"></i></a>
+                                        <a href="/ver-comprobantes/{{$otro->id_cotizacion}}" class="link-secondary tooltip-container m-2" type="button">
+                                            <span class="tooltip-text">Ver Comprobantes</span>
+                                            <i class="fa-solid fa-folder-open"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -99,8 +105,6 @@
         </div>
     </div>
 </div>
-
-
 <div class="modal fade modal-lg" id="exampleModal_detalle_cotizacion" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog">
@@ -169,56 +173,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="exampleModal_gasto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Comprobar Gasto</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col">
-                        <label for="">Fecha</label>
-                        <input type="text" class="form-control">
-                    </div>
-                    <div class="col">
-                        <label for="">Monto</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <input class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
-                        <label class="form-check-label" for="checkChecked">
-                            Es Factura
-                        </label>
-                    </div>
-                    <div class="col">
-                        <label for="">Deducible</label>
-                        <input type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <label for="">Observaciones</label>
-                        <textarea name="" id="" class="form-control"></textarea>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="">Subir archivo</label>
-                    <div class="col">
-                        <input type="file" class="form-control">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar</button>
             </div>
         </div>
     </div>

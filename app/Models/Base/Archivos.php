@@ -14,6 +14,7 @@ class Archivos extends Model
         $nuevo->id_cotizacion = $id_cotizacion;
         $nuevo->id_comprobante = $id_comprobante;
         $nuevo->id_deposito = $id_deposito;
+        $nuevo->archivo_fecha = date('Y-m-d');
         $nuevo->save();
         return $nuevo;
     }

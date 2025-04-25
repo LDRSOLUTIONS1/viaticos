@@ -7,6 +7,7 @@ use App\Http\Controllers\Base\MotivosController;
 use App\Http\Controllers\Base\CotizacionTiposController;
 use App\Http\Controllers\CotizacionController;
 use App\Http\Controllers\Base\AerolineasController;
+use App\Http\Controllers\ComprobanteGastoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,3 +41,5 @@ Route::get('/select-cotizacion-tipos', [CotizacionTiposController::class, 'selec
 Route::get('/cotizaciones/{id_solicitud}', [CotizacionController::class, 'index']);
 Route::get('/select-aerolineas', [AerolineasController::class, 'select']);
 Route::post('/nueva-cotizacion', [CotizacionController::class, 'nuevo']);
+Route::post('/nuevo-comprobante', [ComprobanteGastoController::class, 'nuevo']);
+Route::get('/ver-comprobantes/{id_cotizacion}', [ComprobanteGastoController::class, 'index']);

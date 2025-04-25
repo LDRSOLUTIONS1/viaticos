@@ -15,7 +15,8 @@ class SolicitudController extends Controller
     }
     public function index($token, $id_user)
     {
-        if ($token == 'vddfvdf45') {
+        $id_user = base64_decode($id_user);
+        if ($token === $this->token()) {
             $admin = UsuariosAdmin::where('id_persona', $id_user)->first();
             if ($admin) {
                 $solicitudes = VisSolicitudes::all();
@@ -71,6 +72,16 @@ class SolicitudController extends Controller
         $solicitud = VisSolicitudes::where('id_solicitud', $id_solicitud)->first();
         $cotizaciones = Cotizaciones::where('id_solicitud', $id_solicitud)->get();
         $gasto_cotizado = $this->data->sum('cotizaciones', 'cotizacion_costo', "id_solicitud = $id_solicitud and id_estatus =1");
-        return view('solicitudes.detalles', compact('solicitud', 'cotizaciones', 'gasto_cotizado'));
+        $clase = "";
+        if ($gasto_cotizado > $solicitud->solicitud_costo_estimado) {
+            $clase = "rojo";
+        }
+        return view('solicitudes.detalles', compact('solicitud', 'cotizaciones', 'gasto_cotizado', 'clase'));
+    }
+
+    public function token()
+    {
+        $token = md5("ldrSolutions" . date('Ymd'));
+        return $token;
     }
 }

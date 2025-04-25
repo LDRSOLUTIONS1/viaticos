@@ -28,6 +28,7 @@ class Cotizaciones extends Model
         $nuevo->cotizacion_vigencia = $cotizacion_vigencia;
         $nuevo->id_persona_autoriza = $id_persona_autoriza;
         $nuevo->cotizacion_destino = $cotizacion_destino;
+        $nuevo->cotizacion_fecha = date('Y-m-d');
         $nuevo->save();
         return $nuevo;
     }
