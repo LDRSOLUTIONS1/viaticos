@@ -85,7 +85,7 @@ class CotizacionController extends Controller
                 null,
                 null,
                 null,
-                null,
+                $request->cotizacion_fecha_otros,
                 null,
                 null,
                 null,
@@ -93,7 +93,7 @@ class CotizacionController extends Controller
                 null,
                 null,
                 null,
-                null
+                $validated['cotizacion_destino']
             );
             return $nuevo;
         } catch (\Exception $e) {

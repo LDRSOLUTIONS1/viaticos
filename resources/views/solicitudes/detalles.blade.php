@@ -3,6 +3,7 @@
     .hidden {
         display: none;
     }
+    
 </style>
 <div class="container justify-content-center">
     <h4 class="mb-2 m-3 text-center titulo">Detalles de Solicitud</h4>
@@ -10,7 +11,7 @@
 <div class="container d-flex justify-content-end">
     <button class="btn btn-secondary btn-sm m-2" data-bs-toggle="modal"
         data-bs-target="#exampleModal_cotizacion">Cotizar</button>
-    <a href="/depositos" class="btn btn-secondary btn-sm m-2">Depósitos</a>
+    <a href="/ver-depositos/{{$solicitud->id_solicitud}}" class="btn btn-secondary btn-sm m-2">Depósitos</a>
 </div>
 <div class="container">
     <div class="row">
@@ -84,13 +85,17 @@
                             <label for="cotizacion_costo">Costo</label>
                             <input type="text" name="cotizacion_costo" id="cotizacion_costo" class="form-control">
                         </div>
+                        <div class="col hidden_otros" id="fecha_oculta">
+                            <label for="cotizacion_fecha_otros">Fecha</label>
+                            <input type="date" name="cotizacion_fecha_otros" id="cotizacion_fecha_otros" class="form-control">
+                        </div>
                         <div class="col">
                             <label for="cotizacion_destino">Destino</label>
                             <input type="text" name="cotizacion_destino" id="cotizacion_destino" class="form-control">
                         </div>
                     </div>
                     <div id="inputsOcultos" class="hidden">
-                        <div class="row" id="inputsOcultos">
+                        <div class="row">
                             <div class="col">
                                 <label for="">Aerolínea</label>
                                 <select name="id_aerolinea" id="contenedor_select_aerolineas" class="form-select">
@@ -339,6 +344,12 @@
             inputsDiv.style.display = 'block'; // Muestra los inputs
         } else {
             inputsDiv.style.display = 'none';  // Oculta los inputs
+        }
+        const fechaOtros= document.getElementById('fecha_oculta');
+        if (this.value === '9') {
+            fechaOtros.style.display = 'none';  // Oculta los inputs
+        } else {
+            fechaOtros.style.display = 'block'; // Muestra los inputs
         }
     });
     async function enviarComprobante(event) {

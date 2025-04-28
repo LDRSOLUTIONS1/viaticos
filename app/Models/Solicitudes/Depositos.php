@@ -7,7 +7,7 @@ class Depositos extends Model
     protected $primaryKey = "id_deposito";
     public $timestamps = false;
     public function nuevo($id_solicitud,$id_cuenta,$id_tipo,
-    $deposito_fecha,$deposito_monto,$deposito_comentario,$deposito_ok)
+    $deposito_fecha,$deposito_monto,$deposito_comentario)
     {
         $nuevo = new Depositos();
         $nuevo->id_solicitud = $id_solicitud;
@@ -16,7 +16,7 @@ class Depositos extends Model
         $nuevo->deposito_fecha = $deposito_fecha;
         $nuevo->deposito_monto = $deposito_monto;
         $nuevo->deposito_comentario = $deposito_comentario;
-        $nuevo->deposito_ok = $deposito_ok;
+        $nuevo->deposito_ok = null;
         $nuevo->save();
         return $nuevo;
     }

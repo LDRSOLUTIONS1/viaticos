@@ -40,8 +40,6 @@ class ComprobanteGastoController extends Controller
             );
             if ($archivo) {
                 $modelo_archivo = new Archivos();
-                $nombreSinExtension = pathinfo($archivo->getClientOriginalName(), PATHINFO_FILENAME);
-                $extension = $archivo->getClientOriginalExtension();
                 $nombre_archivo = $archivo->getClientOriginalName();
                 $ruta = 'recursos/comprobantes/' . $nuevo->id_cotizacion;
                 $ruta_base = 'recursos/comprobantes/' . $nuevo->id_cotizacion . '/' . $nombre_archivo;
