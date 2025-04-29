@@ -30,14 +30,16 @@
                                     <td>
                                         <a href="{{$vuelo->id_cotizacion}}"
                                             class="link-secondary tooltip-container m-2 btn-comprobante" type="button"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal_gasto" data-id="{{$vuelo->id_cotizacion}}">
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal_gasto"
+                                            data-id="{{$vuelo->id_cotizacion}}">
                                             <span class="tooltip-text">Subir Comprobante</span>
                                             <i class="fa-solid fa-arrow-up-from-bracket"></i></a>
                                         <a href="" class="link-primary tooltip-container m-2" type="button"
                                             data-bs-toggle="modal" data-bs-target="#exampleModal_detalle_cotizacion">
                                             <span class="tooltip-text">Ver Detalles</span>
                                             <i class="fa-solid fa-magnifying-glass"></i></a>
-                                        <a href="/ver-comprobantes/{{$vuelo->id_cotizacion}}" class="link-secondary tooltip-container m-2" type="button">
+                                        <a href="/ver-comprobantes/{{$vuelo->id_cotizacion}}"
+                                            class="link-secondary tooltip-container m-2" type="button">
                                             <span class="tooltip-text">Ver Comprobantes</span>
                                             <i class="fa-solid fa-folder-open"></i></a>
                                     </td>
@@ -92,7 +94,8 @@
                                             data-bs-toggle="modal" data-bs-target="#exampleModal_detalle_cotizacion">
                                             <span class="tooltip-text">Ver Detalles</span>
                                             <i class="fa-solid fa-magnifying-glass"></i></a>
-                                        <a href="/ver-comprobantes/{{$otro->id_cotizacion}}" class="link-secondary tooltip-container m-2" type="button">
+                                        <a href="/ver-comprobantes/{{$otro->id_cotizacion}}"
+                                            class="link-secondary tooltip-container m-2" type="button">
                                             <span class="tooltip-text">Ver Comprobantes</span>
                                             <i class="fa-solid fa-folder-open"></i></a>
                                     </td>

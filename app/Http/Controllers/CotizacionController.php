@@ -73,8 +73,7 @@ class CotizacionController extends Controller
             $validated = $request->validate([
                 'id_solicitud' => 'required|integer',
                 'id_cotizacion_tipo' => 'required|integer',
-                'cotizacion_costo' => 'required|numeric',
-                'cotizacion_destino' => 'required|string|max:90'
+                'cotizacion_costo' => 'required|numeric'
             ]);
 
             $modelo = new Cotizaciones();
@@ -93,7 +92,7 @@ class CotizacionController extends Controller
                 null,
                 null,
                 null,
-                $validated['cotizacion_destino']
+                $request->cotizacion_destino
             );
             return $nuevo;
         } catch (\Exception $e) {
