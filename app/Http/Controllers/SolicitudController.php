@@ -6,6 +6,7 @@ use App\Models\Vistas\VisSolicitudes;
 use App\Models\Base\UsuariosAdmin;
 use App\Models\Solicitudes\Cotizaciones;
 use App\Http\Librerias\DataSQL;
+use App\Models\Vistas\VisSumComprobantesSolicitud;
 class SolicitudController extends Controller
 {
     protected $data;
@@ -72,11 +73,13 @@ class SolicitudController extends Controller
         $solicitud = VisSolicitudes::where('id_solicitud', $id_solicitud)->first();
         $cotizaciones = Cotizaciones::where('id_solicitud', $id_solicitud)->get();
         $gasto_cotizado = $this->data->sum('cotizaciones', 'cotizacion_costo', "id_solicitud = $id_solicitud and id_estatus =1");
+        $monto_depositado = $this->data->sum('depositos', 'deposito_monto', "id_solicitud = $id_solicitud");
+        $gasto_real = VisSumComprobantesSolicitud::where("id_solicitud", $id_solicitud)->first();
         $clase = "";
         if ($gasto_cotizado > $solicitud->solicitud_costo_estimado) {
             $clase = "rojo";
         }
-        return view('solicitudes.detalles', compact('solicitud', 'cotizaciones', 'gasto_cotizado', 'clase'));
+        return view('solicitudes.detalles', compact('solicitud', 'cotizaciones', 'gasto_cotizado', 'clase', 'monto_depositado', 'gasto_real'));
     }
 
     public function token()

@@ -10,7 +10,12 @@ class CotizacionController extends Controller
     {
         $vuelos = VisCotizaciones::where('id_solicitud', $id_solicitud)->where('id_cotizacion_tipo', "9")->get();
         $otros = VisCotizaciones::where('id_solicitud', $id_solicitud)->where('id_cotizacion_tipo', "<>", "9")->get();
-        return view("solicitudes.cotizaciones", compact("vuelos", "otros","id_solicitud"));
+        return view("solicitudes.cotizaciones", compact("vuelos", "otros", "id_solicitud"));
+    }
+    public function detalles($id_cotizacion)
+    {
+        $cotizacion = Cotizaciones::find($id_cotizacion);
+        return view("solicitudes.cotizacion_detalles", compact("cotizacion"));
     }
     public function nuevo(Request $request)
     {
@@ -37,7 +42,6 @@ class CotizacionController extends Controller
                 'cotizacion_costo' => 'required|numeric',
                 'cotizacion_destino' => 'required|string|max:90',
                 'id_aerolinea' => 'required|integer',
-                'cotizacion_clave_reservacion' => 'required|string|max:50',
                 'cotizacion_ruta' => 'required|string|max:50',
             ]);
 
@@ -46,7 +50,7 @@ class CotizacionController extends Controller
                 $validated['id_solicitud'],
                 $validated['id_cotizacion_tipo'],
                 $validated['id_aerolinea'],
-                $validated['cotizacion_clave_reservacion'],
+                $request->cotizacion_clave_reservacion,
                 $validated['cotizacion_ruta'],
                 $request->cotizacion_fecha_compra,
                 $request->cotizacion_fecha_inicio,

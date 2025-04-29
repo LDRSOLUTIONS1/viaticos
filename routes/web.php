@@ -48,3 +48,4 @@ Route::get('/ver-comprobantes/{id_cotizacion}', [ComprobanteGastoController::cla
 Route::get('/ver-depositos/{id_solicitud}', [DepositosController::class, 'index']);
 Route::get('/select-cuentas', [CuentasBancariasController::class, 'select']);
 Route::post('/nuevo-deposito', [DepositosController::class, 'nuevo']);
+Route::get('/cotizacion-detalles/{id_cotizacion}', [CotizacionController::class, 'detalles']);

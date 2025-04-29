@@ -3,7 +3,6 @@
     .hidden {
         display: none;
     }
-    
 </style>
 <div class="container justify-content-center">
     <h4 class="mb-2 m-3 text-center titulo">Detalles de Solicitud</h4>
@@ -19,29 +18,62 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col"><b>Monto Solicitado</b></div>
-                        <div class="col">$ {{number_format($solicitud->solicitud_costo_estimado, 2)}}</div>
-                        <div class="col"><b>Gasto Cotizado</b></div>
-                        <div class="col">$ {{number_format($gasto_cotizado, 2)}}</div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col"><b>Folio</b></div>
+                                <div class="col">{{$solicitud->id_solicitud}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>Solicitante</b></div>
+                                <div class="col">{{$solicitud->nombre_solicitante}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>Fecha Nacimiento</b></div>
+                                <div class="col">{{$solicitud->fecha_nacimiento}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>Concepto</b></div>
+                                <div class="col">{{$solicitud->concepto_nombre}}</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col"><b>Marca</b></div>
+                                <div class="col">{{$solicitud->nombre_empresa}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>Sede</b></div>
+                                <div class="col">{{$solicitud->nombre_sede}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>Área</b></div>
+                                <div class="col">{{$solicitud->nombre_area}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>Puesto</b></div>
+                                <div class="col">{{$solicitud->nombre_puesto}}</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col"><b>Monto Solicitado</b></div>
+                                <div class="col">$ {{number_format($solicitud->solicitud_costo_estimado, 2)}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>Monto Depositado</b></div>
+                                <div class="col">$ {{number_format($monto_depositado, 2)}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>Gasto Cotizado</b></div>
+                                <div class="col">$ {{number_format($gasto_cotizado, 2)}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><b>Gasto Comprobado</b></div>
+                                <div class="col">$ {{number_format($gasto_real->monto, 2)}}</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col"><b>Monto Depositado</b></div>
-                        <div class="col">$2,600.00</div>
-                        <div class="col"><b>Gasto Real</b></div>
-                        <div class="col">$2,600.00</div>
-                    </div>
-                    <div class="row">
-                        <div class="col"><b>Folio</b></div>
-                        <div class="col">{{$solicitud->id_solicitud}}</div>
-                        <div class="col"><b>Solicitante</b></div>
-                        <div class="col">{{$solicitud->nombre_solicitante}}</div>
-                        <div class="col"><b>Área</b></div>
-                        <div class="col">{{$solicitud->nombre_area}}</div>
-                        <div class="col"><b>Concepto</b></div>
-                        <div class="col">{{$solicitud->concepto_nombre}}</div>
-                    </div>
-                    <div class="row">
-
                         <div class="col"><b>Motivo</b></div>
                         <div class="col-10">{{$solicitud->motivo_nombre}}</div>
                     </div>
@@ -87,7 +119,8 @@
                         </div>
                         <div class="col hidden_otros" id="fecha_oculta">
                             <label for="cotizacion_fecha_otros">Fecha</label>
-                            <input type="date" name="cotizacion_fecha_otros" id="cotizacion_fecha_otros" class="form-control">
+                            <input type="date" name="cotizacion_fecha_otros" id="cotizacion_fecha_otros"
+                                class="form-control">
                         </div>
                         <div class="col">
                             <label for="cotizacion_destino">Destino</label>
@@ -345,7 +378,7 @@
         } else {
             inputsDiv.style.display = 'none';  // Oculta los inputs
         }
-        const fechaOtros= document.getElementById('fecha_oculta');
+        const fechaOtros = document.getElementById('fecha_oculta');
         if (this.value === '9') {
             fechaOtros.style.display = 'none';  // Oculta los inputs
         } else {
@@ -411,5 +444,25 @@
             const idCotizacion = e.target.closest('.btn-comprobante').dataset.id;
             document.getElementById('inputIdCotizacion').value = idCotizacion;
         }
+    });
+</script>
+<script>
+    function loadCotizacionDetails(url) {
+        // Mostrar un loader mientras se carga el contenido
+        $('#cotizacion_detalles').html('<div class="text-center p-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>');
+
+        // Hacer la petición AJAX para obtener el contenido
+        $.get(url, function (data) {
+            // Insertar el contenido recibido en el modal
+            $('#cotizacion_detalles').html(data);
+        }).fail(function () {
+            // Manejar errores
+            $('#cotizacion_detalles').html('<div class="alert alert-danger">Error al cargar los detalles. Por favor, intente nuevamente.</div>');
+        });
+    }
+
+    // Opcional: Resetear el contenido cuando se cierre el modal
+    $('#exampleModal_detalle_cotizacion').on('hidden.bs.modal', function () {
+        $('#cotizacion_detalles').html('');
     });
 </script>
