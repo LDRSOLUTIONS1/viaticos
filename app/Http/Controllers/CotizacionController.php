@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Solicitudes\Cotizaciones;
 use App\Models\Vistas\VisCotizaciones;
+use Illuminate\Support\Facades\Mail;
 class CotizacionController extends Controller
 {
     public function index($id_solicitud)
@@ -24,6 +25,9 @@ class CotizacionController extends Controller
             $nuevo = $this->vuelo($request);
         } else {
             $nuevo = $this->otros($request);
+        }
+        if ($nuevo) {
+            $this->enviarCorreo($nuevo);
         }
         return response()->json([
             'success' => (bool) $nuevo,
@@ -105,5 +109,49 @@ class CotizacionController extends Controller
                 'message' => 'Error: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    public function enviarCorreo($nuevo)
+    {
+        $destinatarios = [
+            'ivan.villa@ldrsolutions.com.mx'
+            // 'contabilidad@empresa.com',
+        ];
+
+        $html = "
+        <html>
+        <head>
+            <title>Nueva Cotización de Viáticos</title>
+            <style>
+                body { font-family: Arial, sans-serif; }
+                .header { background-color: #f8f9fa; padding: 20px; }
+                .content { padding: 20px; }
+                .footer { background-color: #f8f9fa; padding: 10px; font-size: 12px; }
+            </style>
+        </head>
+        <body>
+            <div class='header'>
+                <h2>Nueva Cotización de Viáticos</h2>
+            </div>
+            <div class='content'>
+                <p>Se ha creado una nueva cotización con los siguientes detalles:</p>
+                <ul>
+                    <li><strong>Folio Solicitud:</strong> ID $nuevo->id_solicitud</li>
+                    <li><strong>Tipo:</strong> ID $nuevo->id_cotizacion_tipo</li>
+                    <li><strong>Costo:</strong> $ $nuevo->cotizacion_costo</li>
+                </ul>
+            </div>
+            <div class='footer'>
+                Este es un mensaje automático, por favor no responder.
+            </div>
+        </body>
+        </html>
+    ";
+
+        Mail::send([], [], function ($message) use ($html, $destinatarios) {
+            $message->to($destinatarios)
+                ->subject('Nueva Cotización de Viáticos Creada')
+                ->html($html);
+        });
     }
 }

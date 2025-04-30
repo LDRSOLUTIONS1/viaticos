@@ -69,7 +69,11 @@
                             </div>
                             <div class="row">
                                 <div class="col"><b>Gasto Comprobado</b></div>
+                                @if ($gasto_real)
                                 <div class="col">$ {{number_format($gasto_real->monto, 2)}}</div>
+                                @else
+                                <div class="col">$ 0.00</div>
+                                @endif
                             </div>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ use App\Models\Solicitudes\Depositos;
 use App\Models\Base\Archivos;
 use App\Models\Vistas\VisArchivosDepositos;
 use App\Http\Librerias\DataSQL;
+use Illuminate\Support\Facades\Mail;
 class DepositosController extends Controller
 {
     protected $data;
@@ -46,7 +47,9 @@ class DepositosController extends Controller
                 );
                 $archivo->move($ruta, $nombre_archivo);
             }
-
+            if ($nuevo) {
+                $this->enviarCorreo($nuevo);
+            }
             return response()->json([
                 'success' => (bool) $nuevo,
                 'message' => $nuevo ? 'Se creó un nuevo Depósito' : 'No se pudo crear el depósito'
@@ -58,5 +61,47 @@ class DepositosController extends Controller
                 'message' => 'Error: ' . $e->getMessage()
             ], 500);
         }
+    }
+    public function enviarCorreo($nuevo)
+    {
+        $destinatarios = [
+            'ivan.villa@ldrsolutions.com.mx'
+            // 'contabilidad@empresa.com',
+        ];
+
+        $html = "
+        <html>
+        <head>
+            <title>Nuevo Depósito de Viáticos</title>
+            <style>
+                body { font-family: Arial, sans-serif; }
+                .header { background-color: #f8f9fa; padding: 20px; }
+                .content { padding: 20px; }
+                .footer { background-color: #f8f9fa; padding: 10px; font-size: 12px; }
+            </style>
+        </head>
+        <body>
+            <div class='header'>
+                <h2>Nuevo Depósito de Viáticos</h2>
+            </div>
+            <div class='content'>
+                <p>Se ha creado un nuevo depósito con los siguientes detalles:</p>
+                <ul>
+                    <li><strong>Folio Solicitud:</strong> ID $nuevo->id_solicitud</li>
+                    <li><strong>Comentarios:</strong> $nuevo->deposito_comentario</li>
+                </ul>
+            </div>
+            <div class='footer'>
+                Este es un mensaje automático, por favor no responder.
+            </div>
+        </body>
+        </html>
+    ";
+
+        Mail::send([], [], function ($message) use ($html, $destinatarios) {
+            $message->to($destinatarios)
+                ->subject('Nuevo Depósito de Viáticos Creado')
+                ->html($html);
+        });
     }
 }
