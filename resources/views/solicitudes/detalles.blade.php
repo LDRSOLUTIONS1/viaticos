@@ -57,22 +57,26 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col"><b>Monto Solicitado</b></div>
-                                <div class="col">$ {{number_format($solicitud->solicitud_costo_estimado, 2)}}</div>
+                                <div class="col d-flex justify-content-end">$
+                                    {{number_format($solicitud->solicitud_costo_estimado, 2)}}</div>
                             </div>
                             <div class="row">
                                 <div class="col"><b>Monto Depositado</b></div>
-                                <div class="col">$ {{number_format($monto_depositado, 2)}}</div>
+                                <div class="col d-flex justify-content-end">$ {{number_format($monto_depositado, 2)}}
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col"><b>Gasto Cotizado</b></div>
-                                <div class="col">$ {{number_format($gasto_cotizado, 2)}}</div>
+                                <div class="col d-flex justify-content-end">$ {{number_format($gasto_cotizado, 2)}}
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col"><b>Gasto Comprobado</b></div>
                                 @if ($gasto_real)
-                                <div class="col">$ {{number_format($gasto_real->monto, 2)}}</div>
+                                    <div class="col d-flex justify-content-end">$ {{number_format($gasto_real->monto, 2)}}
+                                    </div>
                                 @else
-                                <div class="col">$ 0.00</div>
+                                    <div class="col d-flex justify-content-end">$ 0.00</div>
                                 @endif
                             </div>
                         </div>
